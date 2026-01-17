@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WorkspaceSettings">
+    <project name="client" path="$PROJECT_DIR$/client" />
+    <project name="server" path="$PROJECT_DIR$/server" />
+    <option name="workspace" value="true" />
+  </component>
+</project>

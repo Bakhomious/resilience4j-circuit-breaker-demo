@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: client
+
+server:
+  port: 8080
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, circuitbreakers
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      slowService:
+        register-health-indicator: true
+        sliding-window-size: 5                           # <- Look at the last 5 calls
+        minimum-number-of-calls: 3                       # <- At least 3 calls must be made to evaluate
+        failure-rate-threshold: 50                       # <- 50% failure rate
+        wait-duration-in-open-state: 10s                 # <- Stay OPEN for 10 seconds
+        permitted-number-of-calls-in-half-open-state: 2  # <- Allow 2 calls in HALF_OPEN state (when trying to recover)
+        automatic-transition-from-open-to-half-open-enabled: true

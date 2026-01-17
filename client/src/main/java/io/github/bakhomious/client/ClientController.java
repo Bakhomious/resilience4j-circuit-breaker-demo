@@ -13,12 +13,12 @@ public class ClientController {
 
     private final ClientService clientService;
 
-    public ClientController(ClientService clientService) {
+    public ClientController(final ClientService clientService) {
         this.clientService = clientService;
     }
 
     @GetMapping("/test")
-    public ResponseEntity<String> trigger(@RequestParam TYPE type) {
+    public ResponseEntity<String> trigger(@RequestParam final TYPE type) {
         final var typeStr = type.toString().toLowerCase();
         return clientService.callServer(typeStr);
     }

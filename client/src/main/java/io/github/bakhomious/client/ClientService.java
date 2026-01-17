@@ -15,12 +15,12 @@ public class ClientService {
 
     private final WebClient webClient;
 
-    public ClientService(WebClient webClient) {
+    public ClientService(final WebClient webClient) {
         this.webClient = webClient;
     }
 
     @CircuitBreaker(name = "slowService", fallbackMethod = "fallbackResponse")
-    public ResponseEntity<String> callServer(String endpoint) {
+    public ResponseEntity<String> callServer(final String endpoint) {
         final var response = this.webClient.get()
             .uri("/server/" + endpoint)
             .retrieve()
@@ -31,7 +31,7 @@ public class ClientService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<String> fallbackResponse(String endpoint, Throwable throwable) {
+    public ResponseEntity<String> fallbackResponse(final String endpoint, final Throwable throwable) {
         final var message = "Fallback response due to timeout or error. Endpoint: %s, Error: %s".formatted(
             endpoint,
             throwable.getMessage()

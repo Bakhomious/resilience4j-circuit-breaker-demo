@@ -19,9 +19,14 @@ resilience4j:
     instances:
       slowService:
         register-health-indicator: true
-        sliding-window-size: 5                           # <- Look at the last 5 calls
-        minimum-number-of-calls: 3                       # <- At least 3 calls must be made to evaluate
-        failure-rate-threshold: 50                       # <- 50% failure rate
-        wait-duration-in-open-state: 10s                 # <- Stay OPEN for 10 seconds
-        permitted-number-of-calls-in-half-open-state: 2  # <- Allow 2 calls in HALF_OPEN state (when trying to recover)
+        # Look at the last x calls
+        sliding-window-size: ${SLIDING_WINDOW_SIZE:5}
+        # At least x calls must be made to evaluate
+        minimum-number-of-calls: ${MINIMUM_NUMBER_OF_CALLS:3}
+        # x% failure rate to trip the circuit breaker
+        failure-rate-threshold: ${FAILURE_RATE_THRESHOLD:50}
+        # Stay OPEN for x seconds
+        wait-duration-in-open-state: ${WAIT_DURATION_IN_OPEN_STATE:10s}
+        # Allow x calls in HALF_OPEN state
+        permitted-number-of-calls-in-half-open-state: ${PERMITTED_NUMBER_OF_CALLS_IN_HALF_OPEN_STATE:2}
         automatic-transition-from-open-to-half-open-enabled: true
